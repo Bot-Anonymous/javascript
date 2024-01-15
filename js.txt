@@ -1,0 +1,21 @@
+---
+Variable Rules :- 
+
+"use strict" 
+var ,const and let keywords
+datatypes
+explicit conversion
+operator
+typeof operator
+template string
+if else
+loops
+switch
+ternary operator
+arrays
+scopes
+lexical scope
+array cloning
+for of loop
+for in loop
+array destruturing
