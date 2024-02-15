@@ -19,3 +19,7 @@ array cloning
 for of loop
 for in loop
 array destruturing
+
+
+------evenr loop
+working of setTimeout()

@@ -1,0 +1,26 @@
+.box{
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+    border: 10px solid black;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    cursor: pointer;
+}
+.grandpa{
+    width: 400px;
+    height: 400px;
+    background-color: red;
+}
+.pa{
+    width: 200px;
+    height: 200px;
+    background-color: green;
+}
+.me{
+    width: 100px;
+    height: 100px;
+    background-color: yellow;
+}

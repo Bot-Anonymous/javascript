@@ -1,0 +1,20 @@
+.mainDiv{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    text-align: center;
+}
+.mainDiv h1{
+    background-color: darkgray;
+    border-radius: 5px;
+}
+#btn{
+    padding: 10px;
+    background-color: black;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+
+}

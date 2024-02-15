@@ -557,3 +557,440 @@
 
 // -----
 // --
+//>>>>>>>>>>>>>>>>>>>>> some methods of object <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+// 1). Call
+// 2). Apply
+// 3). bind
+// --------- call
+// const user1={
+//     u_name:"User1",
+//     age:22,
+//     about:function(feed,num){
+//         console.log(`This is ${this.u_name} and age is ${this.age}`);
+//         console.log(`Feedback is : ${feed}`);
+//         console.log(`After ${num} years This will ${this.age+num} years old`)
+//     }
+// }
+// const user2={
+//     u_name:"User2",
+//     age:18
+// }
+// user1.about();
+// // now we want to run about function for user2 also without copy
+// user1.about.call(user1,"Nothoong",5);    // user1 ka functin hai and user1 ke liye call
+// // user1.about.call(user2,"hi",100);    // user1 ka functin hai but user2 ke liye call
+
+// // ------------ apply method
+// user1.about.apply(user1,["hi",20])  // same as bind but extra argument is in form of array
+
+
+// ---- bind method
+// const user1={
+//     u_name:'User1 Kumar',
+//     age:22,
+//     about:function(){
+//         console.log(`Username is ${this?.u_name} and age is ${this?.age}`);
+//     }
+// }
+// const user2={
+//     u_name:'User2 Kumar',
+//     age:56
+// }
+// const a=user1.about.bind(user2);
+// a();    // can be call at any time
+// -- why we require this ???
+// const func=user1.about;
+// func();  // error because  this is changed to window
+// hence bind is required
+
+// ************************* there is no this of arrow function *****************
+// const obj1={
+//     u_name:"Yogesh",
+//     age:22,
+//     about:()=>{
+//         console.log(`Username is ${this.u_name} and age is ${this.age}`);
+//     }
+// }
+// obj1.about();   // hence arraow function fail is case if this
+
+// --------------
+// // --------------------- object using function
+// function setUser(u_name,age,gender){
+//     const obj={
+//         user_name:u_name,
+//         user_age:age,
+//         user_gender:gender,
+//         about(){
+//             return `Username : ${this?.user_name}|| age : ${this?.user_age}|| ${this?.user_gender}`;
+//         }
+//     }   
+//     return obj;
+// }
+// const user1=setUser("Yogesh",18,"Male");
+// const user2=setUser("Hari",48,"Male");
+// const user3=setUser("Ram",678,"Male");
+// const user4=setUser("Krish",10001,"Male");
+// const user5=setUser("Sita",101,"Female");
+// console.log(user1.about());
+// console.log(user2.about());  
+// console.log(user3.about());  
+// console.log(user4.about());  
+// console.log(user5.about());  
+////  every time a object creates then a function also created
+// const methods={
+//     about(){
+//         return `Username : ${this?.user_name}|| age : ${this?.user_age}|| ${this?.user_gender}`;
+//     },
+//     getAge(){
+//         return this?.user_age;
+//     }
+// }
+// function setUser(u_name,age,gender){
+//     const obj={
+//         user_name:u_name,
+//         user_age:age,
+//         user_gender:gender,
+//         about:methods.about,
+//         getAge:methods.getAge
+//     }   
+//     return obj;
+// } 
+// // now only function is referred not created every_time
+// const user1=setUser("Yogesh",18,"Male");
+// const user2=setUser("Hari",48,"Male");
+// const user3=setUser("Ram",678,"Male");
+// const user4=setUser("Krish",10001,"Male");
+// const user5=setUser("Sita",101,"Female");
+// console.log(user1.about());   
+// console.log(user2.about());  
+// console.log(user3.about());  
+// console.log(user4.about());  
+// console.log(user5.about()); 
+// console.log(user5.getAge()); 
+// ------------------------------------
+// const obj1={
+//     uName:"Yogesh",
+//     age:23
+// }
+// const obj2=Object.create(obj1);   
+// // creating object using this method will inherit the members of object inside paranthesis
+// console.log(obj2.age);  // we can use methods of obj1 also
+
+
+// --------------------------- implimenting this is above example
+// const methods={
+//     about(){
+//         return `Username : ${this?.user_name}|| age : ${this?.user_age}|| ${this?.user_gender}`;
+//     },
+//     getAge(){
+//         return this?.user_age;
+//     }
+// }
+// function setUser(u_name,age,gender){
+//     const obj=Object.create(methods);
+//         obj.user_name=u_name;
+//         obj.user_age=age;
+//         obj.user_gender=gender;
+//     return obj;
+// } 
+// // now only function is referred not created every_time
+// const user1=setUser("Yogesh",18,"Male");
+// const user2=setUser("Hari",48,"Male");
+// const user3=setUser("Ram",678,"Male");
+// const user4=setUser("Krish",10001,"Male");
+// const user5=setUser("Sita",101,"Female");
+// console.log(user1.about());   
+// console.log(user2.about());  
+// console.log(user3.about());  
+// console.log(user4.about());  
+// console.log(user5.about()); 
+// console.log(user5.getAge()); 
+// --
+// ------------------------------
+// --
+// ----------------------- prototype and new keywords -----------------------
+// in js function is also a object
+// function fun(){
+//     console.log("Hello");
+// }
+// console.log(fun.name);   // return fun_name
+// fun.myOwn="Hello this is Yogesh";    // we can add key value pair in function
+// console.log(fun.myOwn);
+
+
+// ************** function provide us a  prototype which is an object *****************
+// all key value pairs are added in this prototype
+// only function provide the prototype property
+// console.log(fun.prototype);
+// // adding data in prototype
+// fun.prototype.tell=function(){
+//     console.log("Hi I am Fun");
+// }
+// fun.prototype.tell();         // call the method in prototype
+
+
+// -------------- application of prototype
+// in previous __proto__ example we need not to make external methods object
+// we can define all the methods in prototype of function itself
+// function setUser(u_name,age,gender){
+//     const obj=Object.create(setUser.prototype);
+//     obj.user_name=u_name;
+//     obj.user_age=age;
+//     obj.user_gender=gender;
+    
+//     return obj;
+// };
+// setUser.prototype.about=function(){
+//     return `Username : ${this?.user_name}|| age : ${this?.user_age}|| ${this?.user_gender}`;
+// };
+// setUser.prototype.getAge=function(){
+//     return this?.user_age;
+// }
+// const user1=setUser("Yogesh",18,"Male");
+// const user2=setUser("Hari",48,"Male");
+// const user3=setUser("Ram",678,"Male");
+// const user4=setUser("Krish",10001,"Male");
+// const user5=setUser("Sita",101,"Female");
+// console.log(user1.about());   
+// console.log(user2.about());    // working
+
+// --
+// ---------------------
+// --
+// --------------------- new keyword
+// new keyword itself create a link between __proto__ and prototype
+// function set_user(f_name,l_name,age,gender){
+//     this.first_name=f_name;
+//     this.last_name=l_name;
+//     this.age=age;
+//     this.gender=gender;
+// }
+// set_user.prototype.about=function(){
+//     return `Name : ${this.first_name+this.last_name}|Age : ${this.age} |${this.gender}`
+// }
+// const user1=new set_user("yogesh","kumar",22,"male");
+// const user2=new set_user("Hari","kumar",42,"male");
+// const user3=new set_user("Sita","Devi",55,"Female");
+// const user4=new set_user("Shyam","Singh",18,"male");
+// const about=user1.about();
+// // console.log(about);
+// for(let key in user1){
+//     // console.log(key);  // also print the keys from its prototype
+//     if(user1.hasOwnProperty(key)){            // hasOwnProperty
+//         console.log(key)
+//     }
+// }
+
+
+// ------------------------ 
+// const array=new Array(1,2,3);
+// console.log(Array.prototype);
+// console.log(Array.isArray(array));  // true
+// calss in javascript
+
+// class User{
+//     constructor(u_name,age,gender){
+//         console.log("constructor Called");
+//         this.user_name=u_name;
+//         this.age=age;
+//         this.gender=gender;
+//     }
+//     about(){
+//         console.log(`Username :${this.user_name}| age: ${this.age} |${this.gender} `);
+//     }
+//     is18(){
+//         if(this.age>18){
+//             return true;
+//         }
+//         else{
+//             return false;
+//         }
+//     }
+// }
+// const user1=new User("Yogesh Kumar",19,"male");
+// console.log(user1.is18());   
+// user1.about();
+
+
+// ------------- extends keyword
+// class Animal{
+//     leg=4;
+//     constructor(Name,age){
+//         console.log("Animal Constructor called");
+//         this.Name=Name;
+//         this.age=age;
+//     }
+//     about(){
+//         console.log(`This is Animal Class have ${this.leg} legs`)
+//     }
+//     eat(){
+//         console.log("Eating");
+//     }
+// }
+// class dog extends Animal{
+//     about(){
+//         console.log(`This is Dog Clas of name ${this.Name}`);
+//     }
+// }
+// const animal=new Animal("Cat",2);
+// animal.about();
+// animal.eat();
+// const dog1=new dog("puppy",120);  
+// dog1.about();   // dog class function will called
+// class Animal{
+//     leg=4;
+//     constructor(Name,age){
+//         console.log("Animal Constructor called");
+//         this.Name=Name;
+//         this.age=age;
+//     }
+//     about(){
+//         console.log(`This is Animal Class have ${this.leg} legs`)
+//     }
+//     eat(){
+//         console.log("Eating");
+//     }
+// }
+// class dog extends Animal{
+//     constructor(Name,age,speed){
+//         super(name,age)
+//         this.speed=speed;
+//     }
+//     about(){
+//         console.log(`This is Dog Clas of name ${this.Name}`);
+//     }
+// }
+// const animal=new Animal("Cat",2);
+// animal.about();
+// animal.eat();
+// const dog1=new dog("puppy",12,120);  
+// dog1.about();   // dog class function will called
+
+// ------------getter and setter
+// get is used to convert method into property
+// class Demo{
+//     constructor(f_name,l_name,num){
+//         this.n=num;
+//         this.first_name=f_name;
+//         this.last_name=l_name;
+//     }
+//     status(){
+//         console.log("This is Demo Class");
+//     }
+//     get add3(){
+//         console.log(this.n+3);
+//     }
+//     get fullname(){
+//         console.log(`${this.first_name} ${this.last_name}`)
+//     }
+//     set fullname(Name){
+//         const [f_name,l_name]=Name.split(" ");
+//         this.first_name=f_name;
+//         this.last_name=l_name;
+//     }
+// }
+// const obj1=new Demo("yogesh",'Kumar',8);
+// obj1.status();
+// obj1.add3;   // no calling require(behaves like property)
+// obj1.fullname;
+// // obj1.fullname="Ram Kumar";      // error we cannot
+// // to handle this set require
+// obj1.fullname="Ram kumar";
+// obj1.fullname;  // name changed
+
+// ------------- static keyword
+// class Demo{
+//     static count=0;
+//     static intro(){
+//         console.log("THis is Demo Class Hi ");
+//     }
+//     constructor(){
+//         // count+=1;             //---------------------------- ???? why not (pending)
+//     }
+// }
+// const obj1=new Demo();
+// const obj2=new Demo();
+// Demo.intro(); // static function cannot require object to call
+// console.log(Demo.count);
+
+
+// ----
+// // illustrating compile or not
+// console.log(this);
+// console.log(window);
+// // console.log(.var1);       // syntax error in this line
+// console.log(var1);
+// var var1=40;    
+// // console.log(var2);     // error and also this error is not caught by pre-compilation
+// let var2;
+// console.log(var2);
+// // as error come before executing first two line means compilation occur
+// // fun1();
+// // fun();     // errro   this is TDZ for fun
+// // function fun1(){
+// //     console.log("Hello this is Function Declaration");
+// // }
+// // var fun=function(){
+// //     console.log("Hello this is Function expression");
+// // }
+
+// ------    let hoisted or not
+// console.log(typeof var1);   // undefined although variable is not created
+// console.log(typeof var2);   // error because not var2 is hoisted but it is uninitialiseds
+// let var2;
+
+// -----------------    -------------
+// function outside(Name){
+//     function inside(){
+//         console.log(`hi ${Name} I am inside Function`);
+//     }
+//     return inside
+// }
+// const ans=outside("Yogesh Kumar");  
+// ans();
+
+
+
+
+
+// ---------- closures example ---------
+// function pow(power){
+//     function res(num){
+//         console.log(num**power);
+//     }
+//     return res;
+// }
+// const cube=pow(3);
+// const cbrt=pow(1/3);
+// cube(2);
+// cbrt(8);
+// ----------------
+// function myfun(){
+//     x=true
+//     function inside(){
+//         if(x){
+//             console.log("Hi, You Called Me !!");
+//             x=false;
+//         }
+//         else{
+//             console.log("I am already run 1 time");
+//         }
+//     }
+//     return inside;
+// }
+// const fun=myfun();
+// fun();
+// fun();
+// ------------------------
+// >>>>>>>>>>>>>>>>>>>>>> Local Module <<<<<<<<<<<<<<<<<<<<
+// exports.fun=function(){    // this function ca be accessed by another file
+//     console.log("Hi this is basic.js fuction");  
+// }
+// --- 2nd way
+// const welcome={
+//     "intro":function(){
+//         console.log("This is Intro function ");
+//     },
+//     'name':"Basic.js"
+// }
+// module.exports=welcome;
