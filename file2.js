@@ -193,3 +193,189 @@
 
 
 // --
+
+// console.log("Start")
+// setInterval(()=>{      // run continuosly after one second(1000 ms)
+//     console.log("hi");  
+// },1000);
+
+// -- Normal project  (ID -P4)
+// const body=document.body;
+// const intervalId=setInterval(()=>{
+//     const red=Math.floor(Math.random()*126);
+//     const green=Math.floor(Math.random()*126);
+//     const blue=Math.floor(Math.random()*126);
+//     const rgb=`rgb(${red},${green},${blue})`;
+//     body.style.background=rgb;
+// },1000);
+// const btn=document.querySelector("button");
+// btn.addEventListener("click",()=>{
+//     clearInterval(intervalId);
+//     btn.textContent=body.style.background;
+// });
+
+
+// ------- Callback in Async Programming ID P5
+// const heading1=document.querySelector(".heading1");
+// const heading2=document.querySelector(".heading2");
+// const heading3=document.querySelector(".heading3");
+// const heading4=document.querySelector(".heading4");
+// const heading5=document.querySelector(".heading5");
+// const heading6=document.querySelector(".heading6");
+// const heading7=document.querySelector(".heading7");
+// const heading8=document.querySelector(".heading8");
+
+// setInterval(()=>{
+//     heading1.textContent="Heading 1"
+//     heading1.style.color="red";
+// },1000);
+// setInterval(()=>{           // these are not relative (absolute time calculation)
+//     heading2.textContent="Heading 2"
+//     heading2.style.color="green";
+// },2000);    
+//  // for larger value it becomes more difficult 
+//   2nd Approach
+
+// setInterval(()=>{
+//     heading1.textContent="Heading 1"
+//     heading1.style.color="red";
+//     setInterval(()=>{
+//         heading2.textContent="Heading 2"
+//         heading2.style.color="green";
+//         setInterval(()=>{
+//             heading3.textContent="Heading 3"
+//             heading3.style.color="blue";
+//             setInterval(()=>{
+//                 heading4.textContent="Heading 4"
+//                 heading4.style.color="yellow";
+//             },1000); 
+//         },1000); 
+//     },1000); 
+// },1000);
+
+// The above code is called callback Hell (so confusing)                (imp)
+// to deal this we use promises
+//      ------- doing the above thing using function
+
+// function change(element,text,color,time,onSuccess,onFailure){
+//     setTimeout(()=>{
+//         if(element){
+//             element.textContent=text;
+//             element.style.color=color;
+//             if(onSuccess){
+//                 onSuccess();
+//             }
+//         }
+//         else{
+//             if(onFailure){
+//                 onFailure();
+//             }
+//         };
+//     },time);
+// }
+// change(heading1,"Heading-1","red",1000,()=>{
+//     change(heading2,"Heading-2","green",1000,()=>{
+//         change(heading3,"Heading-3","blue",1000,()=>{
+//             change(heading4,"Heading-4","yellow",1000,()=>{
+//                 change(heading5,"Heading-5","orange",1000,()=>{
+//                     change(heading6,"Heading-6","cyan",1000,()=>{
+//                         change(heading7,"Heading-7","violet",1000,()=>{
+//                             change(heading8,"Heading-8","purple",1000,()=>{
+//                             },()=>{console.log("Element Not Exist");});
+//                         },()=>{console.log("Element Not Exist");});
+//                     },()=>{console.log("Element Not Exist");});
+//                 },()=>{console.log("Element Not Exist");});
+//             },()=>{console.log("Element Not Exist");});
+//         },()=>{console.log("Element Not Exist");});
+//     },()=>{console.log("Element Not Exist");});
+// },()=>{console.log("Element Not Exist");});
+
+// ---------- this is class Pyramid of DOOM (callback hell)
+
+// >>>>>>>>>>>>>>>>>>>>>>>>>>> Promises <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+// Promise is async task which is a feature of Browser not JS
+// const list=["number",'age1','name'];
+// const apromise=new Promise((resolve,reject)=>{    // Producing a Promise
+//     if(list.includes("number") && list.includes("age") && list.includes("name")){
+//         resolve("Allowed");
+//     }
+//     else{
+//         reject("Not Allowed");
+//     }
+// });
+// apromise.then((value)=>{   // consuming a promise
+//     console.log(value);
+// },()=>{  error          // 2nd callback run when rejected
+//     console.log(error);
+// })  
+
+// // 2nd method to catch error   (Generally Used Terms)
+// apromise.then((value)=>{     // chaining
+//     console.log(value);
+// })
+// .catch((error)=>{
+//     console.log(error);})
+
+//   Promise using function      (also used in node js)
+// function PromiseFun(value){
+//     return new Promise((resolve,reject)=>{
+//         if(value<0){
+//             resolve("Value is Negative");
+//         }
+//         else{
+//             reject("Value is +ive");
+//         }
+//     });
+// }
+// PromiseFun(1).then((value)=>{
+//     console.log(value);
+// })
+// .catch((error)=>{
+//     console.log(error);
+// });
+
+// ---Promise Chaining
+// function myChain(){
+//     return new Promise((resolve,reject)=>{
+//         reject("First");
+//     });
+// }
+// myChain().catch((value)=>{
+//     console.log(value);
+//     value="second"
+//     return value;
+// }).then((value)=>{console.log(value);});
+// ---------
+// solving the callback hell
+// const heading1=document.querySelector(".heading1");
+// const heading2=document.querySelector(".heading2");
+// const heading3=document.querySelector(".heading3");
+// const heading4=document.querySelector(".heading4");
+// const heading5=document.querySelector(".heading5");
+// const heading6=document.querySelector(".heading6");
+// const heading7=document.querySelector(".heading7");
+// const heading8=document.querySelector(".heading8");
+
+// function solve(element,text,color,time){
+//     return new Promise((resolve,reject)=>{
+//             setTimeout(()=>{
+//                 if(element){
+//                     element.textContent=text;
+//                     element.style.color=color;
+//                     resolve();
+//                 }
+//                 else{
+//                     reject("Element Not Found error");
+//                 }
+//             },time);
+//         })
+// }
+// solve(heading1,"Heading-!",'red',1000)
+// .then(()=>solve(heading2,"Heading-2",'green',300))
+// .then(()=>solve(heading3,"Heading-3",'yellow',200))
+// .then(()=>solve(heading4,"Heading-4",'pink',100))
+// .then(()=>solve(heading5,"Heading-5",'orange',50))
+// .then(()=>solve(heading6,"Heading-6",'purple',200))
+// .then(()=>solve(heading7,"Heading-7",'cyan',500))
+// .then(()=>solve(heading8,"Heading-8",'grey',1000));
+
